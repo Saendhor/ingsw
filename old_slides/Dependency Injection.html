@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Dependency Injection</title>
+<meta name="author" content="E. Tramontana">
+<link href="Dependency%20Injection_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+
+<img alt="diagramma UML delle classi" src="Dependency%20Injection_files/editorUmlClassi.png" width="530" hspace="20" align="middle">
+
+
+<img alt="diagramma UML di sequenza" src="Dependency%20Injection_files/editorUmlSequenza.png" width="410" hspace="0" align="middle">
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Codice Java che mostra l'uso di dependency injection e object pool con il pattern Factory Method</span>
+
+<span class="token comment" spellcheck="true">/** SpCheck svolge il ruolo di Product */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">SpCheck</span> <span class="token punctuation">{</span>
+	<span class="token comment" spellcheck="true">/** Controlla che la parola usata appartenga al dizionario */</span>
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">check</span><span class="token punctuation">(</span>String word<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">/** SpCheckEnglish svolge il ruolo di ConcreteProduct */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpCheckEnglish</span> <span class="token keyword">implements</span> <span class="token class-name">SpCheck</span> <span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">check</span><span class="token punctuation">(</span>String word<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// TODO: Dovrebbe usare il dizionario inglese e le regole per stemming,</span>
+		<span class="token comment" spellcheck="true">// troncamento, etc.</span>
+		<span class="token keyword">return</span> word<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">/** SpCheckItalian svolge il ruolo di ConcreteProduct */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SpCheckItalian</span> <span class="token keyword">implements</span> <span class="token class-name">SpCheck</span> <span class="token punctuation">{</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">check</span><span class="token punctuation">(</span>String word<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// TODO: Dovrebbe usare il dizionario italiano e le regole per stemming,</span>
+		<span class="token comment" spellcheck="true">// troncamento, etc.</span>
+		<span class="token keyword">return</span> word<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span><span class="token string">"ciao"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">/**
+ * TextEditor conosce l'interfaccia SpCheck e non le sue implementazioni. La
+ * dependency injection permette il disaccoppiamento fra TextEditor e la 
+ * sottoclasse di SpCheck.
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TextEditor</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> SpCheck speller<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">TextEditor</span><span class="token punctuation">(</span>SpCheck sp<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		speller <span class="token operator">=</span> sp<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">/** inserisce una parola e controlla lo spelling */</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">put</span><span class="token punctuation">(</span>String word<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>speller<span class="token punctuation">.</span><span class="token function">check</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span><span class="token punctuation">)</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"lingua usata OK :)"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"lingua usata NON OK :("</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>ArrayList<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * CreatorText svolge il ruolo di ConcreteCreator e usa la dependency injection
+ * per la classe TextEditor. Vantaggio: TextEditor non conosce il tipo
+ * dell'istanza usata, e si ha un unico posto per istanziare TextEditor e la
+ * sottoclasse di SpCheck.
+ **/</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">CreatorText</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> List<span class="token operator">&lt;</span> TextEditor <span class="token operator">&gt;</span> pool <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> TextEditor <span class="token function">getEng</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Crea un TextEditor con English"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">TextEditor</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SpCheckEnglish</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> TextEditor <span class="token function">getIta</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Crea un TextEditor con Italian"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">TextEditor</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SpCheckItalian</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">// TODO: Aggiornare il diagramma UML delle classi</span>
+	<span class="token comment" spellcheck="true">/** ritorna, se esiste, una istanza dal pool */</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> TextEditor <span class="token function">getFromPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>pool<span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> pool<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">TextEditor</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">SpCheckEnglish</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">// TODO: Aggiornare il diagramma UML delle classi</span>
+	<span class="token comment" spellcheck="true">/** rilascia l'istanza */</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">release</span><span class="token punctuation">(</span>TextEditor t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		pool<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// classe con il metodo main</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainEditor</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String args<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		TextEditor ed1 <span class="token operator">=</span> CreatorText<span class="token punctuation">.</span><span class="token function">getEng</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Inserisce hello su Editor con spelling check inglese"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		ed1<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		TextEditor ed2 <span class="token operator">=</span> CreatorText<span class="token punctuation">.</span><span class="token function">getIta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Inserisce ciao su Editor con spelling check italiano"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		ed2<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"ciao"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Inserisce hello su Editor con spelling check italiano"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		ed2<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"hello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		TextEditor ed3 <span class="token operator">=</span> CreatorText<span class="token punctuation">.</span><span class="token function">getFromPool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		ed3<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">"word"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		CreatorText<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span>ed3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<script src="Dependency%20Injection_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>Esempio Java 8</title>
+  <meta name="author" content="E. Tramontana">
+  <link href="Esempio%20Java%208%205_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Esempio di programmazione funzionale con Java</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Optional<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * Figura rappresenta un quadrilatero, e tiene la misura dei lati e degli angoli
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Figura</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> Integer<span class="token punctuation">[</span><span class="token punctuation">]</span> lato <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> Integer<span class="token punctuation">[</span><span class="token punctuation">]</span> angolo <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Integer</span><span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">Figura</span><span class="token punctuation">(</span><span class="token keyword">final</span> <span class="token keyword">int</span> l0<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> l1<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> l2<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> l3<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> a1<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> a2<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> a3<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		lato<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> l0<span class="token punctuation">;</span>
+		lato<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> l1<span class="token punctuation">;</span>
+		lato<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> l2<span class="token punctuation">;</span>
+		lato<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> l3<span class="token punctuation">;</span>
+		angolo<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">360</span> <span class="token operator">-</span> a1 <span class="token operator">-</span> a2 <span class="token operator">-</span> a3<span class="token punctuation">;</span>
+		angolo<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> a1<span class="token punctuation">;</span>
+		angolo<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> a2<span class="token punctuation">;</span>
+		angolo<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> a3<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getLato</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span>
+			i<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> lato<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getAngolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">)</span>
+			i<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> angolo<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getPerimetro</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> lato<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> lato<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> lato<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> lato<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getLatoMinore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">final</span> List<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> l <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span>lato<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">final</span> Optional<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> vmin <span class="token operator">=</span> l<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>Integer<span class="token operator">:</span><span class="token operator">:</span>compare<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>vmin<span class="token punctuation">.</span><span class="token function">isPresent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token keyword">return</span> vmin<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isQuadrato</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>lato<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> lato<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+				<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>angolo<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> angolo<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+				<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Optional<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span>Collectors<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainFigura</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> List<span class="token operator">&lt;</span> Figura <span class="token operator">&gt;</span> flista <span class="token operator">=</span> List<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Figura</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Figura</span><span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Figura</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// trova il lato minore fra tutte le figure</span>
+		Optional<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> minLato <span class="token operator">=</span> flista<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+							<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>f <span class="token operator">-</span><span class="token operator">&gt;</span> f<span class="token punctuation">.</span><span class="token function">getLatoMinore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+							<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>Integer<span class="token operator">:</span><span class="token operator">:</span>compare<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>minLato<span class="token punctuation">.</span><span class="token function">isPresent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Lato minore: "</span> <span class="token operator">+</span> minLato<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token comment" spellcheck="true">// trova i quadrati</span>
+		List<span class="token operator">&lt;</span> Figura <span class="token operator">&gt;</span> quadr <span class="token operator">=</span> flista<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+						<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>f <span class="token operator">-</span><span class="token operator">&gt;</span> f<span class="token punctuation">.</span><span class="token function">isQuadrato</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+						<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		quadr<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>q <span class="token operator">-</span><span class="token operator">&gt;</span> 
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Quadrato: "</span> <span class="token operator">+</span> q<span class="token punctuation">.</span><span class="token function">getLato</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> q<span class="token punctuation">.</span><span class="token function">getLato</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> q<span class="token punctuation">.</span><span class="token function">getLato</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> q<span class="token punctuation">.</span><span class="token function">getLato</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token comment" spellcheck="true">// trova somma perimetri</span>
+		<span class="token keyword">int</span> sumPerim <span class="token operator">=</span> flista<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+						<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>f <span class="token operator">-</span><span class="token operator">&gt;</span> f<span class="token punctuation">.</span><span class="token function">getPerimetro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+						<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Integer<span class="token operator">:</span><span class="token operator">:</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Somma perimetri: "</span> <span class="token operator">+</span> sumPerim<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+Lato minore: 3
+Quadrato: 5 5 5 5
+Somma perimetri: 56
+</code></pre>
+
+<script src="Esempio%20Java%208%205_files/prism.js"></script>
+
+    <!--Start of StatCounter Code-->
+    <script type="text/javascript" language="javascript">
+        var sc_project = 963348;
+        var sc_invisible = 1;
+        var sc_security = "fb08d370";
+        var scJsHost = "https://";
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+    </script><script type="text/javascript" src="Esempio%20Java%208%205_files/counter.js"></script>
+
+    <script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script>
+
+    <!--End of StatCounter Code-->
+
+
+
+
+</body></html>

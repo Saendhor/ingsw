@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>State Pattern</title>
+<meta name="author" content="E. Tramontana">
+<link href="State%20Pattern_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/statoBigliettiUmlClassi.png">
+<img alt="diagramma UML delle classi" src="State%20Pattern_files/statoBigliettiUmlClassi.png" width="400" hspace="20" align="middle"></a>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/statoBigliettiUmlSequenza.png">
+<img alt="diagramma UML di sequenza" src="State%20Pattern_files/statoBigliettiUmlSequenza.png" width="500" hspace="0" align="middle"></a>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Codice Java che implementa il design pattern State</span>
+
+<span class="token comment" spellcheck="true">// StatoBiglietto e' uno State</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">StatoBiglietto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mostra</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> StatoBiglietto <span class="token function">intesta</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> StatoBiglietto <span class="token function">paga</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> StatoBiglietto <span class="token function">cancella</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Disponibile e' un ConcreteState</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Disponibile</span> <span class="token keyword">implements</span> <span class="token class-name">StatoBiglietto</span> <span class="token punctuation">{</span>	
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mostra</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">intesta</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"DISP Cambia stato da Disponibile a Bloccato"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Bloccato</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">intesta</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">paga</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"DISP Non si puo' pagare, bisogna prima intestarlo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">cancella</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"DISP Lo stato era gia' Disponibile"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Bloccato e' un ConcreteState</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Bloccato</span> <span class="token keyword">implements</span> <span class="token class-name">StatoBiglietto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String nome<span class="token punctuation">;</span>
+	
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mostra</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"BLOC Nome: "</span><span class="token operator">+</span>nome<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">intesta</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"BLOC Inserito nuovo intestatario"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		nome <span class="token operator">=</span> s<span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">paga</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"BLOC Cambia stato da Bloccato a Venduto"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Venduto</span><span class="token punctuation">(</span>nome<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">paga</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">cancella</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"BLOC Cambia stato da Bloccato a Disponibile"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Disponibile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Venduto e' un ConcreteState</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>time<span class="token punctuation">.</span>LocalDateTime<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Venduto</span> <span class="token keyword">implements</span> <span class="token class-name">StatoBiglietto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> String nome<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> LocalDateTime dataPagam<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">Venduto</span><span class="token punctuation">(</span>String n<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		nome <span class="token operator">=</span> n<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mostra</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"VEND Nome: "</span> <span class="token operator">+</span> nome<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">intesta</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"VEND Non puo' cambiare il nome nello stato Venduto"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">paga</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>dataPagam <span class="token operator">==</span> null<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			dataPagam <span class="token operator">=</span> LocalDateTime<span class="token punctuation">.</span><span class="token function">now</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"VEND Pagamento effettuato"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span> <span class="token keyword">else</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"VEND Il biglietto era gia' stato pagato"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> StatoBiglietto <span class="token function">cancella</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"VEND Non puo' cambiare stato da Venduto a Disponibile"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Biglietto e' un Context</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Biglietto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String codice <span class="token operator">=</span> <span class="token string">"XYZ"</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> prezzo <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">private</span> StatoBiglietto sb <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Disponibile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mostra</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Prezzo: "</span> <span class="token operator">+</span> prezzo <span class="token operator">+</span> <span class="token string">"  codice: "</span> <span class="token operator">+</span> codice<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		sb<span class="token punctuation">.</span><span class="token function">mostra</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">prenota</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		sb <span class="token operator">=</span> sb<span class="token punctuation">.</span><span class="token function">intesta</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">cancella</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		sb <span class="token operator">=</span> sb<span class="token punctuation">.</span><span class="token function">cancella</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">compra</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		sb <span class="token operator">=</span> sb<span class="token punctuation">.</span><span class="token function">paga</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Classe con il main che usa il Context</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Biglietto b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Biglietto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">usaBiglietto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">usaBiglietto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		b<span class="token punctuation">.</span><span class="token function">prenota</span><span class="token punctuation">(</span><span class="token string">"Mario Tokoro"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		b<span class="token punctuation">.</span><span class="token function">compra</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		b<span class="token punctuation">.</span><span class="token function">mostra</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+		
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">nonUsaOk</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		b<span class="token punctuation">.</span><span class="token function">compra</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		b<span class="token punctuation">.</span><span class="token function">cancella</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		b<span class="token punctuation">.</span><span class="token function">prenota</span><span class="token punctuation">(</span><span class="token string">"Mario Biondi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+DISP Cambia stato da Disponibile a Bloccato
+BLOC Inserito nuovo intestatario
+BLOC Cambia stato da Bloccato a Venduto
+VEND Pagamento effettuato
+Prezzo: 100  codice: XYZ
+VEND Nome: Mario Tokoro
+</code></pre>
+
+<script src="State%20Pattern_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

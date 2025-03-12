@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Decorator Pattern</title>
+<meta name="author" content="E. Tramontana">
+<link href="Decorator%20Pattern_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/decoratorMessaggiUmlClassi.png">
+<img alt="diagramma UML delle classi" src="Decorator%20Pattern_files/decoratorMessaggiUmlClassi.png" width="440" hspace="20" align="middle"></a>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/decoratorMessaggiUmlSequenza.png">
+<img alt="diagramma UML di sequenza" src="Decorator%20Pattern_files/decoratorMessaggiUmlSequenza.png" width="460" hspace="0" align="middle"></a>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Codice Java che implementa il design pattern Decorator</span>
+
+<span class="token comment" spellcheck="true">// Messaggio e' un Component</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Messaggio</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> String <span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> String <span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Testo e' un ConcreteComponent</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Testo</span> <span class="token keyword">implements</span> <span class="token class-name">Messaggio</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String dest<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String testo<span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token function">Testo</span><span class="token punctuation">(</span>String d<span class="token punctuation">,</span> String t<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		dest <span class="token operator">=</span> d<span class="token punctuation">;</span>
+		testo <span class="token operator">=</span> t<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> String <span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"[Testo.getDestin] "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> dest<span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> String <span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"[Testo.getTesto] "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> testo<span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Modificatore e' un Decorator</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Modificatore</span> <span class="token keyword">implements</span> <span class="token class-name">Messaggio</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> Messaggio p<span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token function">Modificatore</span><span class="token punctuation">(</span>Messaggio c<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		p <span class="token operator">=</span> c<span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> String <span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"[Modificatore.getDestin] "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> p<span class="token punctuation">.</span><span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> String <span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"[Modificatore.getTesto] "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> p<span class="token punctuation">.</span><span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Riduttore e' un ConcreteDecorator</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Riduttore</span> <span class="token keyword">extends</span> <span class="token class-name">Modificatore</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token function">Riduttore</span><span class="token punctuation">(</span>Messaggio c<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		<span class="token keyword">super</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+	<span class="token comment" spellcheck="true">// trasforma il testo fornito dal componente piu' interno </span>
+	<span class="token keyword">public</span> String <span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"[Riduttore.getTesto] "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		String s <span class="token operator">=</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"!"</span><span class="token punctuation">,</span> <span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"four"</span><span class="token punctuation">,</span> <span class="token string">"4"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"going to"</span><span class="token punctuation">,</span> <span class="token string">"gonna"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replaceAll</span><span class="token punctuation">(</span><span class="token string">"would you"</span><span class="token punctuation">,</span> <span class="token string">"wonna"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> s<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Indirizzi e' un ConcreteDecorator</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Indirizzi</span> <span class="token keyword">extends</span> <span class="token class-name">Modificatore</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token function">Indirizzi</span><span class="token punctuation">(</span>Messaggio c<span class="token punctuation">)</span> <span class="token punctuation">{</span> 
+		<span class="token keyword">super</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+	<span class="token comment" spellcheck="true">// fa corrispondere un numero al destinatario</span>
+	<span class="token keyword">public</span> String <span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"[Indirizzi.getDestin] "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		String s <span class="token operator">=</span> <span class="token keyword">super</span><span class="token punctuation">.</span><span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replaceFirst</span><span class="token punctuation">(</span><span class="token string">"Taro"</span><span class="token punctuation">,</span> <span class="token string">"3336543211"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		s <span class="token operator">=</span> s<span class="token punctuation">.</span><span class="token function">replaceFirst</span><span class="token punctuation">(</span><span class="token string">"Saro"</span><span class="token punctuation">,</span> <span class="token string">"3939685732"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> s<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Client istanzia opportunamente e invoca i metodi</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> Messaggio m <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Riduttore</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Testo</span><span class="token punctuation">(</span><span class="token string">"Taro"</span><span class="token punctuation">,</span> <span class="token string">"There are four of us here"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Istanziazione ... "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Client c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		c<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		c<span class="token punctuation">.</span><span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Invocazione metodo getTesto ... "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\ntesto: "</span> <span class="token operator">+</span> m<span class="token punctuation">.</span><span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Invocazione metodo getDestin ... "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\ndestin: "</span> <span class="token operator">+</span> m<span class="token punctuation">.</span><span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">test2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Istanziazione m2 ... "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Messaggio m2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Riduttore</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Indirizzi</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Testo</span><span class="token punctuation">(</span><span class="token string">"Saro"</span><span class="token punctuation">,</span> <span class="token string">"Saro, are you going to go home now?"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Invocazione metodo getTesto ... "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\ntesto: "</span> <span class="token operator">+</span> m2<span class="token punctuation">.</span><span class="token function">getTesto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Invocazione metodo getDestin ... "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\ndestin: "</span> <span class="token operator">+</span> m2<span class="token punctuation">.</span><span class="token function">getDestin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-terminal"><code class=" language-terminal">Output dell'esecuzione
+
+Istanziazione ... 
+Invocazione metodo getTesto ... 
+[Riduttore.getTesto] [Modificatore.getTesto] [Testo.getTesto] 
+testo: There are 4 of us here
+
+Invocazione metodo getDestin ... 
+[Modificatore.getDestin] [Testo.getDestin] 
+destin: Taro
+
+Istanziazione m2 ... 
+Invocazione metodo getTesto ... 
+[Riduttore.getTesto] [Modificatore.getTesto] [Modificatore.getTesto] [Testo.getTesto] 
+testo: Saro, are you gonna go home now?
+
+Invocazione metodo getDestin ... 
+[Modificatore.getDestin] [Indirizzi.getDestin] [Modificatore.getDestin] [Testo.getDestin] 
+destin: 3939685732
+</code></pre>
+
+<script src="Decorator%20Pattern_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

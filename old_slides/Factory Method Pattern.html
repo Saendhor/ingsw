@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Factory Method Pattern</title>
+<meta name="author" content="E. Tramontana">
+<link href="Factory%20Method%20Pattern_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/bigliettiUmlClassi.png">
+<img alt="diagramma UML delle classi" src="Factory%20Method%20Pattern_files/bigliettiUmlClassi.png" width="400" hspace="20" align="middle"></a>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/bigliettiUmlSequenza.png">
+<img alt="diagramma UML di sequenza" src="Factory%20Method%20Pattern_files/bigliettiUmlSequenza.png" width="520" hspace="0" align="middle"></a>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Codice Java che implementa il design pattern Factory Method</span>
+
+<span class="token comment" spellcheck="true">// Posto e' un Product</span>
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Posto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> String <span class="token function">getPosizione</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getCosto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">public</span> String <span class="token function">getSettore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Palco e' un ConcreteProduct</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Random<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Palco</span> <span class="token keyword">implements</span> <span class="token class-name">Posto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> numero<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">Palco</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		numero <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getCosto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>numero <span class="token operator">&gt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">50</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">40</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">getPosizione</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> Integer<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>numero<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">getSettore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>numero <span class="token operator">==</span> <span class="token number">20</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">"Centrale"</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>numero <span class="token operator">&gt;</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">"Verde"</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token string">"Blu"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Platea e' un ConcreteProduct</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Random<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Platea</span> <span class="token keyword">implements</span> <span class="token class-name">Posto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> nomi <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">"A"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"C"</span><span class="token punctuation">,</span> <span class="token string">"D"</span><span class="token punctuation">,</span> <span class="token string">"E"</span><span class="token punctuation">,</span> <span class="token string">"F"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> numero<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">int</span> riga<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">Platea</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		numero <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		riga <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Random</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">nextInt</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getCosto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>numero <span class="token operator">&gt;</span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span> <span class="token function">rigaMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">100</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>numero <span class="token operator">&gt;</span> <span class="token number">5</span> <span class="token operator">&amp;&amp;</span> <span class="token function">rigaMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token number">80</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">60</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">getPosizione</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> nomi<span class="token punctuation">[</span>riga<span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>Integer<span class="token punctuation">.</span><span class="token function">toString</span><span class="token punctuation">(</span>numero<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> String <span class="token function">getSettore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>riga <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token string">"Riservato"</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token string">"Normale"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">rigaMax</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span>riga <span class="token operator">&gt;=</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> riga <span class="token operator">&lt;=</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">boolean</span> <span class="token function">rigaMin</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span>riga <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> riga <span class="token operator">==</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// GnrPosizioni e' un Creator</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Set<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>TreeSet<span class="token punctuation">;</span>
+<span class="token keyword">public</span> <span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">GnrPosizioni</span> <span class="token punctuation">{</span> <span class="token comment" spellcheck="true">// versione 1.1</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span> MAXPOSTI <span class="token operator">=</span> <span class="token number">100</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> Set<span class="token operator">&lt;</span> String <span class="token operator">&gt;</span> pst <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TreeSet</span><span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// set di posti</span>
+
+  	<span class="token comment" spellcheck="true">// metodo che rimanda alla sottoclasse l'istanziazione della classe</span>
+	<span class="token keyword">public</span> Posto <span class="token function">prendiNumero</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>pst<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> MAXPOSTI<span class="token punctuation">)</span> <span class="token keyword">return</span> null<span class="token punctuation">;</span>
+		<span class="token comment" spellcheck="true">// il chiamante dovrebbe controllare se null</span>
+		Posto p<span class="token punctuation">;</span>
+		<span class="token keyword">do</span> <span class="token punctuation">{</span>  				  <span class="token comment" spellcheck="true">// fino a quando non trova un posto libero</span>
+			p <span class="token operator">=</span> <span class="token function">getPosto</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// chiama metodo della sottoclasse</span>
+		<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span>pst<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span><span class="token function">getPosizione</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		pst<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span><span class="token function">getPosizione</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> p<span class="token punctuation">;</span> 
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">printPostiOccupati</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>String s <span class="token operator">:</span> pst<span class="token punctuation">)</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>s <span class="token operator">+</span> <span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">// il metodo factory e' dichiarato ma non implementato</span>
+	<span class="token keyword">public</span> <span class="token keyword">abstract</span> Posto <span class="token function">getPosto</span><span class="token punctuation">(</span><span class="token keyword">int</span> tipo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Posizioni e' un ConcreteCreator con un metodo factory</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Posizioni</span> <span class="token keyword">extends</span> <span class="token class-name">GnrPosizioni</span> <span class="token punctuation">{</span>
+	<span class="token comment" spellcheck="true">// metodo factory che ritorna una istanza</span>
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> Posto <span class="token function">getPosto</span><span class="token punctuation">(</span><span class="token keyword">int</span> tipo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// crea l'istanza di un ConcreteProduct </span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">==</span> tipo<span class="token punctuation">)</span> <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Palco</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Platea</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Biglietto e' un client del Product Posto</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Biglietto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String nome<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> Posto pos<span class="token punctuation">;</span>
+	
+	<span class="token keyword">public</span> <span class="token function">Biglietto</span><span class="token punctuation">(</span>Posto p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		pos <span class="token operator">=</span> p<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">intesta</span><span class="token punctuation">(</span>String s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		nome <span class="token operator">=</span> s<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> String <span class="token function">getDettagli</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> nome<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>pos<span class="token punctuation">.</span><span class="token function">getPosizione</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> String <span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> nome<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getCosto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> pos<span class="token punctuation">.</span><span class="token function">getCosto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Classe con il main che usa il ConcreteCreator</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainBiglietti</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Posizioni cp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Posizioni</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Posto pos <span class="token operator">=</span> cp<span class="token punctuation">.</span><span class="token function">prendiNumero</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Biglietto b <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Biglietto</span><span class="token punctuation">(</span>pos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		b<span class="token punctuation">.</span><span class="token function">intesta</span><span class="token punctuation">(</span><span class="token string">"Mario"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Costo "</span> <span class="token operator">+</span> b<span class="token punctuation">.</span><span class="token function">getCosto</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">new</span> <span class="token class-name">Biglietto</span><span class="token punctuation">(</span>cp<span class="token punctuation">.</span><span class="token function">prendiNumero</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">new</span> <span class="token class-name">Biglietto</span><span class="token punctuation">(</span>cp<span class="token punctuation">.</span><span class="token function">prendiNumero</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cp<span class="token punctuation">.</span><span class="token function">printPostiOccupati</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<script src="Factory%20Method%20Pattern_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

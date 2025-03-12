@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Observer Pattern</title>
+<meta name="author" content="E. Tramontana">
+<link href="Observer%20Pattern_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/observerRegistroUmlClassi.png">
+<img alt="diagramma UML delle classi" src="Observer%20Pattern_files/observerRegistroUmlClassi.png" width="400" hspace="20" align="middle"></a>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/observerRegistroUmlSequenza.png">
+<img alt="diagramma UML di sequenza" src="Observer%20Pattern_files/observerRegistroUmlSequenza.png" width="500" hspace="0" align="middle"></a>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Codice Java che implementa il design pattern Observer</span>
+
+<span class="token comment" spellcheck="true">// Monitor e' un ConcreteObserver</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Observer<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Observable<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Monitor</span> <span class="token keyword">implements</span> <span class="token class-name">Observer</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> numOperazioni <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+	<span class="token annotation punctuation">@Override</span> <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">update</span><span class="token punctuation">(</span>Observable obs<span class="token punctuation">,</span> Object s<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Monitor: Il saldo e' di euro "</span><span class="token operator">+</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		numOperazioni<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getNumOperazioni</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> numOperazioni<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Registro e' un ConcreteSubject</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Observable<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Registro</span> <span class="token keyword">extends</span> <span class="token class-name">Observable</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">double</span> bilancio <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">ritira</span><span class="token punctuation">(</span><span class="token keyword">double</span> somma<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Prelievo di "</span> <span class="token operator">+</span> somma <span class="token operator">+</span> <span class="token string">" euro"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>bilancio <span class="token operator">&gt;=</span> somma<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			bilancio <span class="token operator">-=</span> somma<span class="token punctuation">;</span>
+			<span class="token function">setChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">notifyObservers</span><span class="token punctuation">(</span>bilancio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Operazione non permessa"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">deposita</span><span class="token punctuation">(</span><span class="token keyword">double</span> somma<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Deposito di "</span> <span class="token operator">+</span> somma <span class="token operator">+</span> <span class="token string">" euro"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		bilancio <span class="token operator">+=</span> somma<span class="token punctuation">;</span>
+		<span class="token function">setChanged</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">notifyObservers</span><span class="token punctuation">(</span>bilancio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">double</span> <span class="token function">getBilancio</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> bilancio<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Classe con il main che usa il design pattern</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> Registro r <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Registro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> Monitor m <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Monitor</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Client c <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Client</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		c<span class="token punctuation">.</span><span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		r<span class="token punctuation">.</span><span class="token function">addObserver</span><span class="token punctuation">(</span>m<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		r<span class="token punctuation">.</span><span class="token function">ritira</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		r<span class="token punctuation">.</span><span class="token function">deposita</span><span class="token punctuation">(</span><span class="token number">1200</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Saldo attuale: "</span> <span class="token operator">+</span> r<span class="token punctuation">.</span><span class="token function">getBilancio</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" euro"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Il subject ha effettuato "</span> <span class="token operator">+</span> m<span class="token punctuation">.</span><span class="token function">getNumOperazioni</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">" operazioni"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-terminal"><code class=" language-terminal">Output dell'esecuzione
+
+Prelievo di 500.0 euro
+Operazione non permessa
+Deposito di 1200.0 euro
+Monitor: Il saldo e' di euro 1200.0
+Saldo attuale: 1200.0 euro
+Il subject ha effettuato 1 operazioni
+</code></pre>
+
+<script src="Observer%20Pattern_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

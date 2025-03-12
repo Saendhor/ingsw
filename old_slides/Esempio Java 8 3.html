@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>Esempio Java 8</title>
+  <meta name="author" content="E. Tramontana">
+  <link href="Esempio%20Java%208%203_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Esempio di programmazione funzionale con Java</span>
+
+<span class="token comment" spellcheck="true">/** Persona tiene alcuni dati di una persona che lavora in azienda */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Persona</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String nome<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> eta<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> String ruolo<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">Persona</span><span class="token punctuation">(</span>String nom<span class="token punctuation">,</span> <span class="token keyword">int</span> et<span class="token punctuation">,</span> String ruol<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		nome <span class="token operator">=</span> nom<span class="token punctuation">;</span>
+		eta <span class="token operator">=</span> et<span class="token punctuation">;</span>
+		ruolo <span class="token operator">=</span> ruol<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">giovane</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> eta <span class="token operator">&lt;</span> <span class="token number">28</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getEta</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> eta<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> String <span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> nome<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> String <span class="token function">getRuolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> ruolo<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">isRuolo</span><span class="token punctuation">(</span>String r<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> ruolo<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>	
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">/** BustaPaga calcola per ogni persona il suo costo */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">BustaPaga</span> <span class="token keyword">implements</span> <span class="token class-name">Comparable</span> <span class="token operator">&lt;</span> BustaPaga <span class="token operator">&gt;</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> Persona dipendente<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> totale<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> costoBase<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">BustaPaga</span><span class="token punctuation">(</span>Persona p<span class="token punctuation">,</span> <span class="token keyword">int</span> costo<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		dipendente <span class="token operator">=</span> p<span class="token punctuation">;</span>
+		costoBase <span class="token operator">=</span> costo<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> BustaPaga <span class="token function">calcolaCostoBase</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		totale <span class="token operator">=</span> costoBase <span class="token operator">*</span> <span class="token number">25</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getCosto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> totale<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> BustaPaga <span class="token function">aggiungiBonus</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		totale <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> Math<span class="token punctuation">.</span><span class="token function">round</span><span class="token punctuation">(</span>totale <span class="token operator">*</span> <span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> Persona <span class="token function">getPersona</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> dipendente<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> BustaPaga <span class="token function">stampa</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>dipendente<span class="token punctuation">.</span><span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\t"</span> <span class="token operator">+</span> totale<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">compareTo</span><span class="token punctuation">(</span>BustaPaga b<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> dipendente<span class="token punctuation">.</span><span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">compareTo</span><span class="token punctuation">(</span>b<span class="token punctuation">.</span><span class="token function">getPersona</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Comparator<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span>Collectors<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/** ListaPersone tiene le persone che compongono il team di sviluppo 
+ * e ne determina il costo  */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ListaPersone</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> List <span class="token operator">&lt;</span> Persona <span class="token operator">&gt;</span> team <span class="token operator">=</span> List<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Kent Gray"</span><span class="token punctuation">,</span> <span class="token number">29</span><span class="token punctuation">,</span> <span class="token string">"CTO"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Luigi Rossi"</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">,</span> <span class="token string">"Programmer"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Al White"</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token punctuation">,</span> <span class="token string">"Programmer"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Andrea Verdi"</span><span class="token punctuation">,</span> <span class="token number">26</span><span class="token punctuation">,</span> <span class="token string">"GroupLeader"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Joe Black"</span><span class="token punctuation">,</span> <span class="token number">26</span><span class="token punctuation">,</span> <span class="token string">"Programmer"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Jill Purple"</span><span class="token punctuation">,</span> <span class="token number">26</span><span class="token punctuation">,</span> <span class="token string">"Tester"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Bill Green"</span><span class="token punctuation">,</span> <span class="token number">26</span><span class="token punctuation">,</span> <span class="token string">"Analyst"</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+			<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Luc Brown"</span><span class="token punctuation">,</span> <span class="token number">26</span><span class="token punctuation">,</span> <span class="token string">"Tester"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">private</span> Map <span class="token operator">&lt;</span> String<span class="token punctuation">,</span> Integer <span class="token operator">&gt;</span> roleCost <span class="token operator">=</span> Map<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"Programmer"</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">,</span> <span class="token string">"GroupLeader"</span><span class="token punctuation">,</span> <span class="token number">60</span><span class="token punctuation">,</span>
+	        <span class="token string">"CTO"</span><span class="token punctuation">,</span> <span class="token number">65</span><span class="token punctuation">,</span> <span class="token string">"Tester"</span><span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">,</span> <span class="token string">"Analyst"</span><span class="token punctuation">,</span> <span class="token number">54</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">private</span> List <span class="token operator">&lt;</span> BustaPaga <span class="token operator">&gt;</span> pagamenti<span class="token punctuation">;</span>
+
+	<span class="token comment" spellcheck="true">/** per le persone del team calcola l'ammontare da pagare */</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">genListaPagamenti</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		pagamenti <span class="token operator">=</span> team<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>pers <span class="token operator">-</span><span class="token operator">&gt;</span> <span class="token keyword">new</span> <span class="token class-name">BustaPaga</span><span class="token punctuation">(</span>pers<span class="token punctuation">,</span> roleCost<span class="token punctuation">.</span><span class="token function">getOrDefault</span><span class="token punctuation">(</span>pers<span class="token punctuation">.</span><span class="token function">getRuolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">50</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>busta <span class="token operator">-</span><span class="token operator">&gt;</span> busta<span class="token punctuation">.</span><span class="token function">calcolaCostoBase</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>busta <span class="token operator">-</span><span class="token operator">&gt;</span> busta<span class="token punctuation">.</span><span class="token function">aggiungiBonus</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+				<span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">/** calcola il totale pagamenti e stampa nome persona del team e costo */</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">stampaCalcolaSomma</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> pagamenti<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>BustaPaga<span class="token operator">:</span><span class="token operator">:</span>stampa<span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">mapToInt</span><span class="token punctuation">(</span>BustaPaga<span class="token operator">:</span><span class="token operator">:</span>getCosto<span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">sum</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token comment" spellcheck="true">/**  stampa ciascun ruolo e l'elenco delle persone in quel ruolo */</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">stampaRuoliPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		roleCost<span class="token punctuation">.</span><span class="token function">keySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">peek</span><span class="token punctuation">(</span>role <span class="token operator">-</span><span class="token operator">&gt;</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"\n"</span> <span class="token operator">+</span> role<span class="token operator">+</span><span class="token string">": "</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+				<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>role <span class="token operator">-</span><span class="token operator">&gt;</span> team<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+						<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>pers <span class="token operator">-</span><span class="token operator">&gt;</span> pers<span class="token punctuation">.</span><span class="token function">getRuolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>role<span class="token punctuation">)</span><span class="token punctuation">)</span>
+						<span class="token punctuation">.</span><span class="token function">sorted</span><span class="token punctuation">(</span>Comparator<span class="token punctuation">.</span><span class="token function">comparing</span><span class="token punctuation">(</span>Persona<span class="token operator">:</span><span class="token operator">:</span>getNome<span class="token punctuation">)</span><span class="token punctuation">)</span>
+						<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>pers <span class="token operator">-</span><span class="token operator">&gt;</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>pers<span class="token punctuation">.</span><span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">", "</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainTeam</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        ListaPersone persone <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListaPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        persone<span class="token punctuation">.</span><span class="token function">genListaPagamenti</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> somma <span class="token operator">=</span> persone<span class="token punctuation">.</span><span class="token function">stampaCalcolaSomma</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Totale:\t"</span><span class="token operator">+</span>somma<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+        persone<span class="token punctuation">.</span><span class="token function">stampaRuoliPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>    
+</code></pre>
+
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+Al White        1375
+Andrea Verdi    1650
+Bill Green      1485
+Jill Purple     1540
+Joe Black       1375
+Kent Gray       1788
+Luc Brown       1540
+Luigi Rossi     1375
+Totale: 12128
+
+Analyst: Bill Green, 
+CTO: Kent Gray, 
+GroupLeader: Andrea Verdi, 
+Programmer: Al White, Joe Black, Luigi Rossi, 
+Tester: Jill Purple, Luc Brown, 
+</code></pre>
+
+<script src="Esempio%20Java%208%203_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

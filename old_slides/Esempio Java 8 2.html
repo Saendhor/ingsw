@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>Esempio Java 8</title>
+  <meta name="author" content="E. Tramontana">
+  <link href="Esempio%20Java%208%202_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Esempio di programmazione funzionale con Java 8</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Comparator<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Optional<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span>Collectors<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">ListaPersone</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> List<span class="token operator">&lt;</span> Persona <span class="token operator">&gt;</span> pe <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Saro"</span><span class="token punctuation">,</span> <span class="token number">24</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Taro"</span><span class="token punctuation">,</span> <span class="token number">21</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+		<span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Ian"</span><span class="token punctuation">,</span> <span class="token number">19</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">Persona</span><span class="token punctuation">(</span><span class="token string">"Al"</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">estraiEtaPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		List<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> e <span class="token operator">=</span> pe<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">&gt;</span> x<span class="token punctuation">.</span><span class="token function">getEta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"estrai eta: "</span> <span class="token operator">+</span> e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sommaEtaPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> s <span class="token operator">=</span> pe<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>Persona<span class="token operator">:</span><span class="token operator">:</span>getEta<span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>v<span class="token punctuation">,</span> t<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> v <span class="token operator">+</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"somma eta: "</span> <span class="token operator">+</span> s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">trovaPersona</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Comparator<span class="token operator">&lt;</span> Persona <span class="token operator">&gt;</span> c <span class="token operator">=</span> Comparator<span class="token punctuation">.</span><span class="token function">comparing</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">&gt;</span> x<span class="token punctuation">.</span><span class="token function">getEta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Optional<span class="token operator">&lt;</span> Persona <span class="token operator">&gt;</span> pmax <span class="token operator">=</span> pe<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>x <span class="token operator">-</span><span class="token operator">&gt;</span> x<span class="token punctuation">.</span><span class="token function">giovane</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>pmax<span class="token punctuation">.</span><span class="token function">isPresent</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"trova persona: "</span> <span class="token operator">+</span> pmax<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">trovaPersonaImper</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Persona pmax <span class="token operator">=</span> null<span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>Persona x <span class="token operator">:</span> pe<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>x<span class="token punctuation">.</span><span class="token function">getEta</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span>pmax <span class="token operator">==</span> null<span class="token punctuation">)</span> pmax <span class="token operator">=</span> x<span class="token punctuation">;</span>
+				<span class="token keyword">if</span> <span class="token punctuation">(</span>pmax<span class="token punctuation">.</span><span class="token function">getEta</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> x<span class="token punctuation">.</span><span class="token function">getEta</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> pmax <span class="token operator">=</span> x<span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>pmax <span class="token operator">!=</span> null<span class="token punctuation">)</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"persona: "</span> <span class="token operator">+</span> pmax<span class="token punctuation">.</span><span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Persona</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String nome<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> eta<span class="token punctuation">;</span>
+	<span class="token keyword">public</span> <span class="token function">Persona</span><span class="token punctuation">(</span>String n<span class="token punctuation">,</span> <span class="token keyword">int</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		nome <span class="token operator">=</span> n<span class="token punctuation">;</span>
+		eta <span class="token operator">=</span> e<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">giovane</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> eta <span class="token operator">&lt;</span> <span class="token number">26</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getEta</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> eta<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">public</span> String <span class="token function">getNome</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> nome<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		ListaPersone cp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ListaPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cp<span class="token punctuation">.</span><span class="token function">estraiEtaPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cp<span class="token punctuation">.</span><span class="token function">sommaEtaPersone</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cp<span class="token punctuation">.</span><span class="token function">trovaPersona</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+estrai eta: [24, 21, 19, 16]
+somma eta: 80
+trova persona: Saro
+</code></pre>
+
+<script src="Esempio%20Java%208%202_files/prism.js"></script>
+
+    <!--Start of StatCounter Code-->
+    <script type="text/javascript" language="javascript">
+        var sc_project = 963348;
+        var sc_invisible = 1;
+        var sc_security = "fb08d370";
+        var scJsHost = "https://";
+document.write("<sc"+"ript type='text/javascript' src='" +
+scJsHost+
+"statcounter.com/counter/counter.js'></"+"script>");
+    </script><script type="text/javascript" src="Esempio%20Java%208%202_files/counter.js"></script>
+
+    <script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script>
+
+    <!--End of StatCounter Code-->
+
+
+
+
+</body></html>

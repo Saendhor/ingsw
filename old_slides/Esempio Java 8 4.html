@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>Esempio Java 8</title>
+  <meta name="author" content="E. Tramontana">
+  <link href="Esempio%20Java%208%204_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Esempio di programmazione funzionale con Java</span>
+
+<span class="token comment" spellcheck="true">/**
+ * Per ciascuna terna presente in un array di tre elementi verificare se essa
+ * costituisce un triangolo. Restituire la lista dei perimetri per le terne che
+ * costituiscono triangoli.
+ *
+ * Per la lista di interi formare le terne e verificare se rappresentano triangoli.
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TerneArr</span> <span class="token punctuation">{</span>
+    <span class="token comment" spellcheck="true">// Lista di terne come array di tre elementi</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> terne <span class="token operator">=</span> List<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">,</span>
+			   <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+	<span class="token comment" spellcheck="true">// Lista di numeri da cui formare le terne</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> listaNum <span class="token operator">=</span> List<span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+	<span class="token comment" spellcheck="true">/**
+	 * Trova le terne nelle quali ciascun numero è minore della somma degli altri
+	 * due
+	 */</span>
+	<span class="token keyword">private</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> <span class="token function">trovaTriangoli</span><span class="token punctuation">(</span><span class="token keyword">final</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> listaTerne<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> listaTerne<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				   <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>t <span class="token operator">-</span><span class="token operator">&gt;</span> t<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> t<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> t<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+				   <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>t <span class="token operator">-</span><span class="token operator">&gt;</span> t<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> t<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> t<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+				   <span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>t <span class="token operator">-</span><span class="token operator">&gt;</span> t<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> t<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> t<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+				   <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+   
+	<span class="token comment" spellcheck="true">/** Calcola la somma della terna di lati */</span>
+	<span class="token keyword">private</span> List<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> <span class="token function">calcolaPerimetri</span><span class="token punctuation">(</span><span class="token keyword">final</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> listaTerne<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> listaTerne<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+				   <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>t <span class="token operator">-</span><span class="token operator">&gt;</span> t<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> t<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> t<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+				   <span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+   
+	<span class="token comment" spellcheck="true">/** Forma array di tre elementi dati da tre numeri consecutivi della lista */</span>
+	<span class="token keyword">private</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> <span class="token function">formaTerne</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">final</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> result <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> listaNum<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+			result<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token punctuation">{</span> listaNum<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">,</span> listaNum<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> listaNum<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> result<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+   
+	<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">verificaCalcolaStampa</span><span class="token punctuation">(</span><span class="token keyword">final</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> ter<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		ter<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>e <span class="token operator">-</span><span class="token operator">&gt;</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>e<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> e<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> e<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">"\t"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">final</span> List<span class="token operator">&lt;</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> triang <span class="token operator">=</span> <span class="token function">trovaTriangoli</span><span class="token punctuation">(</span>ter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\nTriangoli"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		triang<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>lati <span class="token operator">-</span><span class="token operator">&gt;</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>lati<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> lati<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">" "</span> <span class="token operator">+</span> lati<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token string">"\t"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\nPerimetri"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">final</span> List<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> perim <span class="token operator">=</span> <span class="token function">calcolaPerimetri</span><span class="token punctuation">(</span>triang<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		perim<span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>p <span class="token operator">-</span><span class="token operator">&gt;</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span>p <span class="token operator">+</span> <span class="token string">"\t"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+   
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">final</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">final</span> TerneArr verif <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TerneArr</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"* Prima lista *"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		verif<span class="token punctuation">.</span><span class="token function">verificaCalcolaStampa</span><span class="token punctuation">(</span>verif<span class="token punctuation">.</span>terne<span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\n* Seconda lista *"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		verif<span class="token punctuation">.</span><span class="token function">verificaCalcolaStampa</span><span class="token punctuation">(</span>verif<span class="token punctuation">.</span><span class="token function">formaTerne</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+* Prima lista *
+1 2 3   3 2 3   3 3 3   3 4 5   5 2 3
+Triangoli
+3 2 3   3 3 3   3 4 5
+Perimetri
+8       9       12
+* Seconda lista *
+2 2 4   2 4 6   4 6 3   6 3 6   3 6 3   6 3 3   3 3 4   3 4 5
+Triangoli
+4 6 3   6 3 6   3 3 4   3 4 5
+Perimetri
+13      15      10      12
+</code></pre>
+
+<script src="Esempio%20Java%208%204_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

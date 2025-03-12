@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>Facade Pattern</title>
+<link href="Facade%20Pattern_files/prism.css" rel="stylesheet">
+<meta name="author" content="E. Tramontana">
+</head>
+
+<body>
+
+<img alt="diagramma UML delle classi" src="Facade%20Pattern_files/libriUmlClassi.png" width="500">
+<img alt="diagramma UML di sequenza" src="Facade%20Pattern_files/libriUmlSequenza.png" width="500">
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Codice Java che implementa il design pattern Facade</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/** 
+ * Permessi implementa le regole per la convalida dei prestiti e delle letture di libri.
+ * Permessi e' una classe del sottosistema
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Permessi</span> <span class="token punctuation">{</span>
+	<span class="token comment" spellcheck="true">// autorizzati alla lettura</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> List <span class="token operator">&lt;</span> String <span class="token operator">&gt;</span> lettura <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Alan"</span><span class="token punctuation">,</span> <span class="token string">"Brian"</span><span class="token punctuation">,</span> <span class="token string">"Claire"</span><span class="token punctuation">,</span> <span class="token string">"Dan"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token comment" spellcheck="true">// autorizzati ai prestiti</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span> String <span class="token operator">&gt;</span> prestito <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Alan"</span><span class="token punctuation">,</span> <span class="token string">"Brian"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">seLeggibile</span><span class="token punctuation">(</span>String nomePers<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Permessi: verifica regola lettura"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> lettura<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>nomePers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">sePrestabile</span><span class="token punctuation">(</span>String nomePers<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Permessi: verifica regole prestito"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> prestito<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>nomePers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/** 
+ * Socio verifica se un utente e' registrato. Socio e' una classe del sottosistema
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Socio</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> List<span class="token operator">&lt;</span> String <span class="token operator">&gt;</span> listaSoci <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token string">"Alan"</span><span class="token punctuation">,</span> <span class="token string">"Dan"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">verificaId</span><span class="token punctuation">(</span>String nome<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Socio: in controlla id"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> listaSoci<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>nome<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>ArrayList<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>HashMap<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Map<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/** 
+ * Prestiti tiene una lista dei libri prestati, e' una classe del sottosistema
+ */</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Prestiti</span> <span class="token punctuation">{</span>
+	<span class="token comment" spellcheck="true">// tabPrestati e' la tabella dei prestiti: la chiave e' il nome della</span>
+	<span class="token comment" spellcheck="true">// persona, il valore e' la lista dei titoli dei libri presi in prestito</span>
+	<span class="token keyword">private</span> Map<span class="token operator">&lt;</span> String<span class="token punctuation">,</span> List<span class="token operator">&lt;</span> String <span class="token operator">&gt;&gt;</span> tabPrestati <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">registra</span><span class="token punctuation">(</span>String nome<span class="token punctuation">,</span> String libro<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Prestiti: prendi libro"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>tabPrestati<span class="token punctuation">.</span><span class="token function">containsKey</span><span class="token punctuation">(</span>nome<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			tabPrestati<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>nome<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>libro<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span> <span class="token punctuation">{</span>
+			List<span class="token operator">&lt;</span> String <span class="token operator">&gt;</span> lis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			lis<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>libro<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			tabPrestati<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span>nome<span class="token punctuation">,</span> lis<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">trovaPersona</span><span class="token punctuation">(</span>String libro<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Prestiti: trova persona"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>String s <span class="token operator">:</span> tabPrestati<span class="token punctuation">.</span><span class="token function">keySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>tabPrestati<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>libro<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">return</span> s<span class="token punctuation">;</span>
+		<span class="token keyword">return</span> null<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">/** Libro e' una classe del sistema */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Libro</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String titolo<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">Libro</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>x <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">)</span> titolo <span class="token operator">=</span> <span class="token string">"Curious George goes fishing"</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span> titolo <span class="token operator">=</span> <span class="token string">"Curious George at the zoo"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getTitolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Libro: titolo"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> titolo<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">getAutore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token string">"A. H. Rey"</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">/**
+ * Registro implementa il ruolo Facade per il sottosistema formato da Prestiti, 
+ * Permessi e Socio. Registro verifica se una certa azione su libro (presta o leggi) 
+ * e' autorizzata e registra i dati rilevanti
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Registro</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> Permessi perm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Permessi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">final</span> Socio so <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Socio</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Prestiti prt <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Prestiti</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token comment" spellcheck="true">// notare che prestaLibro() chiama i metodi delle classi del sottosistema</span>
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">prestaLibro</span><span class="token punctuation">(</span>String nom<span class="token punctuation">,</span> Libro lib<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Registro: presta"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>so<span class="token punctuation">.</span><span class="token function">verificaId</span><span class="token punctuation">(</span>nom<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> perm<span class="token punctuation">.</span><span class="token function">sePrestabile</span><span class="token punctuation">(</span>nom<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Registro: prestabile"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			prt<span class="token punctuation">.</span><span class="token function">registra</span><span class="token punctuation">(</span>nom<span class="token punctuation">,</span> lib<span class="token punctuation">.</span><span class="token function">getTitolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">leggiLibro</span><span class="token punctuation">(</span>Libro lib<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Registro: leggi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">final</span> String nomePers <span class="token operator">=</span> prt<span class="token punctuation">.</span><span class="token function">trovaPersona</span><span class="token punctuation">(</span>lib<span class="token punctuation">.</span><span class="token function">getTitolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Registro: persona che ha in prestito il libro "</span> <span class="token operator">+</span> nomePers<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span>so<span class="token punctuation">.</span><span class="token function">verificaId</span><span class="token punctuation">(</span>nomePers<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> perm<span class="token punctuation">.</span><span class="token function">seLeggibile</span><span class="token punctuation">(</span>nomePers<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">/** Client e' una classe che invoca i metodi del Facade Registro */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Client</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Libro l1 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Libro</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Libro l2 <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Libro</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> String nome <span class="token operator">=</span> <span class="token string">"Alan"</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> Registro r <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Registro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">presta</span><span class="token punctuation">(</span>l1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">presta</span><span class="token punctuation">(</span>l2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">leggi</span><span class="token punctuation">(</span>l1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">presta</span><span class="token punctuation">(</span>Libro lib<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>r<span class="token punctuation">.</span><span class="token function">prestaLibro</span><span class="token punctuation">(</span>nome<span class="token punctuation">,</span> lib<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Prestito registrato"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">leggi</span><span class="token punctuation">(</span>Libro lib<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>r<span class="token punctuation">.</span><span class="token function">leggiLibro</span><span class="token punctuation">(</span>lib<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>nome<span class="token operator">+</span><span class="token string">" legge "</span><span class="token operator">+</span>lib<span class="token punctuation">.</span><span class="token function">getTitolo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+Registro: presta
+Socio: in controlla id
+Permessi: verifica regole prestito
+Registro: prestabile
+Libro: titolo
+Prestiti: prendi libro
+Prestito registrato
+
+Registro: presta
+Socio: in controlla id
+Permessi: verifica regole prestito
+Registro: prestabile
+Libro: titolo
+Prestiti: prendi libro
+Prestito registrato
+
+Registro: leggi
+Libro: titolo
+Prestiti: trova persona
+Registro: persona che ha in prestito il libro Alan
+Socio: in controlla id
+Permessi: verifica regola lettura
+Libro: titolo
+Alan legge Curious George goes fishing
+</code></pre>
+
+<script src="Facade%20Pattern_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

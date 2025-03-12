@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>Esempio Java 8</title>
+  <meta name="author" content="E. Tramontana">
+  <link href="Esempio%20Java%208_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// Esempio di programmazione funzionale con Java 8</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>Arrays<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>stream<span class="token punctuation">.</span>Collectors<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">// Nel seguito si implementano operazioni di somma, ricerca, estrazione  massimo, su una lista di interi tramite Stream</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Importi</span> <span class="token punctuation">{</span>
+	<span class="token comment" spellcheck="true">// Si dichiara e riempie la lista di valori interi </span>
+	<span class="token keyword">private</span> List<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> importi <span class="token operator">=</span> Arrays<span class="token punctuation">.</span><span class="token function">asList</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">34</span><span class="token punctuation">,</span> <span class="token number">56</span><span class="token punctuation">,</span> <span class="token number">78</span><span class="token punctuation">,</span> <span class="token number">90</span><span class="token punctuation">,</span> <span class="token number">45</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token comment" spellcheck="true">// somma in stile funzionale</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">calcolaSomma</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// si ottiene la somma tramite reduce e un'espressione lambda</span>
+		<span class="token keyword">return</span> importi<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>accum<span class="token punctuation">,</span> v<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> accum <span class="token operator">+</span> v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">calcolaSommaImper</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">int</span> risultato <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> v <span class="token operator">:</span> importi<span class="token punctuation">)</span> risultato <span class="token operator">+=</span> v<span class="token punctuation">;</span>
+		<span class="token keyword">return</span> risultato<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">estraiMassimo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> importi<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span>Integer<span class="token operator">:</span><span class="token operator">:</span>compare<span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> List<span class="token operator">&lt;</span> Integer <span class="token operator">&gt;</span> <span class="token function">estraiValori</span><span class="token punctuation">(</span><span class="token keyword">int</span> val<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// si trovano gli elementi piu' grandi di un certo valore tramite filter</span>
+		<span class="token keyword">return</span> importi<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>s <span class="token operator">-</span><span class="token operator">&gt;</span> s <span class="token operator">&gt;</span> val<span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">collect</span><span class="token punctuation">(</span>Collectors<span class="token punctuation">.</span><span class="token function">toList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> String <span class="token function">congiungi</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token comment" spellcheck="true">// si convertono e accumulano i valori tramite map e reduce </span>
+		<span class="token keyword">return</span> importi<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>s <span class="token operator">-</span><span class="token operator">&gt;</span> String<span class="token punctuation">.</span><span class="token function">valueOf</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>res<span class="token punctuation">,</span> v<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">&gt;</span> res<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>v<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		Importi imp <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Importi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> somma <span class="token operator">=</span> imp<span class="token punctuation">.</span><span class="token function">calcolaSomma</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Somma: "</span> <span class="token operator">+</span> somma<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>somma <span class="token operator">==</span> imp<span class="token punctuation">.</span><span class="token function">calcolaSommaImper</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"OK somma"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">int</span> max <span class="token operator">=</span> imp<span class="token punctuation">.</span><span class="token function">estraiMassimo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Massimo: "</span> <span class="token operator">+</span> max<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Valori estratti: "</span><span class="token operator">+</span> imp<span class="token punctuation">.</span><span class="token function">estraiValori</span><span class="token punctuation">(</span><span class="token number">67</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"In stringa: "</span><span class="token operator">+</span>imp<span class="token punctuation">.</span><span class="token function">congiungi</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+Somma: 315
+OK somma
+Massimo: 90
+Valori estratti: [78, 90]
+In stringa: 123456789045
+</code></pre>
+
+
+<script src="Esempio%20Java%208_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

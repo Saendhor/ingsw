@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+  <title>Esempio Composite</title>
+  <meta name="author" content="E. Tramontana">
+  <link href="Esempio%20Composite_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token comment" spellcheck="true">/**
+ * Prodotto svolge il ruole di Component per il design pattern Composite. 
+ * 
+ * I metodi add() e remove() in Prodotto forniscono trasparenza nell'uso di
+ * Leaf o Composite, tuttavia non si ha sicurezza.
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">interface</span> <span class="token class-name">Prodotto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">float</span> <span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getPeso</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token comment" spellcheck="true">/**
+ * Libro svolge il ruolo di Leaf per il design pattern Composite
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Libro</span> <span class="token keyword">implements</span> <span class="token class-name">Prodotto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String titolo<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">float</span> prezzo<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">int</span> peso<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">Libro</span><span class="token punctuation">(</span>String titol<span class="token punctuation">,</span> <span class="token keyword">float</span> prez<span class="token punctuation">,</span> <span class="token keyword">int</span> pes<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		titolo <span class="token operator">=</span> titol<span class="token punctuation">;</span>
+		prezzo <span class="token operator">=</span> prez<span class="token punctuation">;</span>
+		peso <span class="token operator">=</span> pes<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Libro: "</span> <span class="token operator">+</span> titolo <span class="token operator">+</span> <span class="token string">"\tPrezzo: "</span> <span class="token operator">+</span> <span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">float</span> <span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> prezzo<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getPeso</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> peso<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token comment" spellcheck="true">/**
+ * EBook svolge il ruolo di Leaf per il design pattern Composite
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">EBook</span> <span class="token keyword">implements</span> <span class="token class-name">Prodotto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> String titolo<span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">float</span> prezzo<span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token function">EBook</span><span class="token punctuation">(</span>String titol<span class="token punctuation">,</span> <span class="token keyword">float</span> prez<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		titolo <span class="token operator">=</span> titol<span class="token punctuation">;</span>
+		prezzo <span class="token operator">=</span> prez<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"EBook: "</span> <span class="token operator">+</span> titolo <span class="token operator">+</span> <span class="token string">"\tPrezzo: "</span> <span class="token operator">+</span> <span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">float</span> <span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token punctuation">(</span>prezzo <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> <span class="token function">percSconto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getPeso</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">float</span> <span class="token function">percSconto</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> <span class="token number">15</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>ArrayList<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+
+<span class="token comment" spellcheck="true">/**
+ * Carrello svolge il ruolo di Composite per il design pattern Composite
+ **/</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Carrello</span> <span class="token keyword">implements</span> <span class="token class-name">Prodotto</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> List<span class="token operator">&lt;</span> Prodotto <span class="token operator">&gt;</span> nestedElem <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Carrello ------- ------- ------- ------- ---"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span>Prodotto res <span class="token operator">:</span> nestedElem<span class="token punctuation">)</span>
+			res<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"---------------- ------- ------- ------- ---"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"---------------- ------- Prezzo totale: "</span> <span class="token operator">+</span> <span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">float</span> <span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> nestedElem<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>e <span class="token operator">-</span><span class="token operator">&gt;</span> e<span class="token punctuation">.</span><span class="token function">getPrezzo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0f</span><span class="token punctuation">,</span> Float<span class="token operator">:</span><span class="token operator">:</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">int</span> <span class="token function">getPeso</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">return</span> nestedElem<span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>e <span class="token operator">-</span><span class="token operator">&gt;</span> e<span class="token punctuation">.</span><span class="token function">getPeso</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> Integer<span class="token operator">:</span><span class="token operator">:</span>sum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Carrello: add()"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		nestedElem<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token annotation punctuation">@Override</span>
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">remove</span><span class="token punctuation">(</span>Prodotto p<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		nestedElem<span class="token punctuation">.</span><span class="token function">remove</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token comment" spellcheck="true">/**
+ * Creator svolge il ruolo di ConcreteCreator per il design pattern Factory Method,
+ * fornisce vari metodi factory per istanziare Leaf o Composite
+ **/</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Creator</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> libri <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token string">"Gamma Design Pattern"</span><span class="token punctuation">,</span> <span class="token string">"Fowler Refactoring"</span><span class="token punctuation">,</span> <span class="token string">"Beck Extreme Programming"</span><span class="token punctuation">,</span> <span class="token string">"Fowler UML Distilled"</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">float</span><span class="token punctuation">[</span><span class="token punctuation">]</span> prezzi <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">38.5f</span><span class="token punctuation">,</span> <span class="token number">40.0f</span><span class="token punctuation">,</span> <span class="token number">28.5f</span><span class="token punctuation">,</span> <span class="token number">22</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> <span class="token keyword">int</span><span class="token punctuation">[</span><span class="token punctuation">]</span> pesi <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">650</span><span class="token punctuation">,</span> <span class="token number">700</span><span class="token punctuation">,</span> <span class="token number">300</span><span class="token punctuation">,</span> <span class="token number">200</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> Prodotto <span class="token function">getCarrello</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Creator: istanzio Carrello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Carrello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> Prodotto <span class="token function">getLibro</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Creator: istanzio Libro"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">aggiornaIndice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">Libro</span><span class="token punctuation">(</span>libri<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> prezzi<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> pesi<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> Prodotto <span class="token function">getEbook</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Creator: istanzio EBookk"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">aggiornaIndice</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">EBook</span><span class="token punctuation">(</span>libri<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> prezzi<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">aggiornaIndice</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> libri<span class="token punctuation">.</span>length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span>
+			i<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java">
+<span class="token comment" spellcheck="true">/**
+ * L'applicazione che usa il Design Pattern Composite consiste dell'interfaccia
+ * Prodotto (Component), e delle classi Libro e EBook (Leaf), della classe
+ * Creator che istanzia oggetti, della classe Carrello (Composite) per
+ * raggruppare istanze, e del client MainCart che chiama operazioni su Leaf e
+ * Composite.
+ */</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainCart</span> <span class="token punctuation">{</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Prodotto cart <span class="token operator">=</span> Creator<span class="token punctuation">.</span><span class="token function">getCarrello</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Prodotto lib <span class="token operator">=</span> Creator<span class="token punctuation">.</span><span class="token function">getLibro</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token keyword">final</span> Prodotto eb <span class="token operator">=</span> Creator<span class="token punctuation">.</span><span class="token function">getEbook</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">final</span> String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\nChiama print su lib"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		lib<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Peso di lib "</span> <span class="token operator">+</span> lib<span class="token punctuation">.</span><span class="token function">getPeso</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\nInserimento di Libri in Carrello"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cart<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>lib<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cart<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>eb<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cart<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"\nPeso del Carrello "</span> <span class="token operator">+</span> cart<span class="token punctuation">.</span><span class="token function">getPeso</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-terminal"><code class=" language-terminal">
+Output dell'esecuzione
+
+Creator: istanzio Carrello
+Creator: istanzio Libro
+Creator: istanzio EBookk
+
+Chiama print su lib
+Libro: Gamma Design Pattern     Prezzo: 38.5
+Peso di lib 650
+
+Inserimento di Libri in Carrello
+Carrello: add()
+Carrello: add()
+
+
+Carrello ------- ------- ------- ------- ---
+Libro: Gamma Design Pattern     Prezzo: 38.5
+EBook: Fowler Refactoring       Prezzo: 34.0
+---------------- ------- ------- ------- ---
+---------------- ------- Prezzo totale: 72.5
+
+Peso del Carrello 650
+</code></pre>
+
+<script src="Esempio%20Composite_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

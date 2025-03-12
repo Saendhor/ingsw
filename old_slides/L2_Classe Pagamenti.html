@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+	<title>Classe Pagamenti</title>
+<link href="L2_Classe%20Pagamenti_files/prism.css" rel="stylesheet">
+</head>
+<body>
+
+<a href="https://www.dmi.unict.it/tramonta/se/oop/pagamentiUmlClassi.png">
+<img alt="diagramma UML delle classi" src="L2_Classe%20Pagamenti_files/pagamentiUmlClassi.png" width="500" hspace="20" align="middle"></a>
+		
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// classe che implementa metodi aventi ciascuno un singolo compito</span>
+
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>File<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>FileReader<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>LineNumberReader<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>List<span class="token punctuation">;</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>util<span class="token punctuation">.</span>ArrayList<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Pagamenti</span> <span class="token punctuation">{</span>      <span class="token comment" spellcheck="true">// Pagamenti vers 1.2</span>
+	<span class="token keyword">private</span> List<span class="token operator">&lt;</span> Float <span class="token operator">&gt;</span> importi <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span><span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// attributo per lista di valori</span>
+
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">leggiFile</span><span class="token punctuation">(</span>String c<span class="token punctuation">,</span> String n<span class="token punctuation">)</span> <span class="token keyword">throws</span> IOException <span class="token punctuation">{</span>
+		<span class="token keyword">final</span> LineNumberReader f <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LineNumberReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">FileReader</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>c<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		String riga<span class="token punctuation">;</span>
+		<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			riga <span class="token operator">=</span> f<span class="token punctuation">.</span><span class="token function">readLine</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>          <span class="token comment" spellcheck="true">// legge una linea dal file</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>null <span class="token operator">==</span> riga<span class="token punctuation">)</span> <span class="token keyword">break</span><span class="token punctuation">;</span>      <span class="token comment" spellcheck="true">// controlla se il file e' finito</span>
+			<span class="token function">inserisci</span><span class="token punctuation">(</span>Float<span class="token punctuation">.</span><span class="token function">parseFloat</span><span class="token punctuation">(</span>riga<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		f<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">inserisci</span><span class="token punctuation">(</span><span class="token keyword">float</span> x<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>importi<span class="token punctuation">.</span><span class="token function">contains</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>         <span class="token comment" spellcheck="true">// inserisce solo valori distinti</span>
+			importi<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>               <span class="token comment" spellcheck="true">// aggiunge in lista</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">float</span> <span class="token function">calcolaSomma</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">float</span> risultato <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">float</span> v <span class="token operator">:</span> importi<span class="token punctuation">)</span>
+			risultato <span class="token operator">+=</span> v<span class="token punctuation">;</span>               <span class="token comment" spellcheck="true">// somma l'elemento della lista</span>
+		<span class="token keyword">return</span> risultato<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">float</span> <span class="token function">calcolaMassimo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token keyword">float</span> risultato <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">float</span> v <span class="token operator">:</span> importi<span class="token punctuation">)</span>
+			<span class="token keyword">if</span> <span class="token punctuation">(</span>risultato <span class="token operator">&lt;</span> v<span class="token punctuation">)</span> 
+				risultato <span class="token operator">=</span> v<span class="token punctuation">;</span>
+		<span class="token keyword">return</span> risultato<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">svuota</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		importi <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ArrayList</span> <span class="token operator">&lt;</span> <span class="token operator">&gt;</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// classe che chiama metodi di Pagamenti</span>
+<span class="token comment" spellcheck="true">// compilare con javac MainPagamenti.java</span>
+<span class="token comment" spellcheck="true">// eseguire con java MainPagamenti</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MainPagamenti</span> <span class="token punctuation">{</span>
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"inizio esecuzione"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		Pagamenti p <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Pagamenti</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+		<span class="token keyword">try</span> <span class="token punctuation">{</span>
+			p<span class="token punctuation">.</span><span class="token function">leggiFile</span><span class="token punctuation">(</span><span class="token string">"csvfiles"</span><span class="token punctuation">,</span> <span class="token string">"Importi.csv"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+				<span class="token comment" spellcheck="true">// nel caso in cui il file non venisse trovato</span>
+		<span class="token punctuation">}</span>
+		
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"massimo "</span><span class="token operator">+</span>p<span class="token punctuation">.</span><span class="token function">calcolaMassimo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"somma "</span><span class="token operator">+</span>p<span class="token punctuation">.</span><span class="token function">calcolaSomma</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+
+<pre class=" language-java"><code class=" language-java"><span class="token comment" spellcheck="true">// test per la classe Pagamenti</span>
+<span class="token keyword">import</span> java<span class="token punctuation">.</span>io<span class="token punctuation">.</span>IOException<span class="token punctuation">;</span>
+
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TestPagamenti</span> <span class="token punctuation">{</span>  <span class="token comment" spellcheck="true">// per Pagamenti vers 1.2</span>
+	<span class="token keyword">private</span> Pagamenti pgm <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Pagamenti</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">initLista</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		pgm<span class="token punctuation">.</span><span class="token function">svuota</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		pgm<span class="token punctuation">.</span><span class="token function">inserisci</span><span class="token punctuation">(</span><span class="token number">321.01f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		pgm<span class="token punctuation">.</span><span class="token function">inserisci</span><span class="token punctuation">(</span><span class="token number">531.7f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		pgm<span class="token punctuation">.</span><span class="token function">inserisci</span><span class="token punctuation">(</span><span class="token number">1234.5f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testSommaValori</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">initLista</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>pgm<span class="token punctuation">.</span><span class="token function">calcolaSomma</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">2087.21f</span><span class="token punctuation">)</span> <span class="token comment" spellcheck="true">// test che si autovaluta</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"OK test somma val"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"FAILED test somma val"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testLeggiFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		pgm<span class="token punctuation">.</span><span class="token function">svuota</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">try</span> <span class="token punctuation">{</span>
+			pgm<span class="token punctuation">.</span><span class="token function">leggiFile</span><span class="token punctuation">(</span><span class="token string">"csvfiles"</span><span class="token punctuation">,</span> <span class="token string">"Importi.csv"</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"OK test leggi file"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">IOException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"FAILED test leggi file"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">testMaxValore</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		<span class="token function">initLista</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		pgm<span class="token punctuation">.</span><span class="token function">calcolaMassimo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>pgm<span class="token punctuation">.</span><span class="token function">calcolaMassimo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1234.5f</span><span class="token punctuation">)</span>
+			System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"OK test massimo val"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span> System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"FAILED test massimo val"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
+	<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+		TestPagamenti tl <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">TestPagamenti</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		tl<span class="token punctuation">.</span><span class="token function">testLeggiFile</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		tl<span class="token punctuation">.</span><span class="token function">testSommaValori</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		tl<span class="token punctuation">.</span><span class="token function">testMaxValore</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<script src="L2_Classe%20Pagamenti_files/prism.js"></script>
+
+<!--Start of StatCounter Code-->
+<script type="text/javascript" language="javascript">
+var sc_project=963348;
+var sc_invisible=1;
+var sc_partition=7;
+var sc_security="fb08d370";
+</script>
+<script type="text/javascript" language="javascript" src="http://www.statcounter.com/counter/counter.js"></script><noscript><a href="http://www.statcounter.com/" target="_blank"><img  src="http://c8.statcounter.com/counter.php?sc_project=963348&amp;java=0&amp;security=fb08d370&amp;invisible=1" alt="website statistics" border="0"></a> </noscript>
+<!--End of StatCounter Code-->
+
+
+
+</body></html>

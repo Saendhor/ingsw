@@ -8,6 +8,7 @@ public class MultiFibonacci {
 
     //Constructor
     private MultiFibonacci() {
+        index = 3;
         objId = numInstances;
     }
 
@@ -24,7 +25,7 @@ public class MultiFibonacci {
     }
 
     public static MultiFibonacci getInstance() {
-        if(numInstances <= numMaxInstances) {
+        if(numInstances < numMaxInstances) {
             System.out.println("Creating a new instance");
             numInstances++;
             instance = new MultiFibonacci();

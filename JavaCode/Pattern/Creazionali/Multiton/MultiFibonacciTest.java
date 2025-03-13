@@ -2,7 +2,7 @@ public class MultiFibonacciTest {
 
     //Checks the total number of item in the values array of the MultiFibonacci object
     public static void printTestNumValues(MultiFibonacci object) {
-        System.out.println("Total number of values is: " + object.getNumValues() + "\n");
+        System.out.println("[ID:" + object.getInstanceId() + "] Total number of values is: " + object.getNumValues() + "\n");
 
     }
 
@@ -32,8 +32,8 @@ public class MultiFibonacciTest {
 
     //Checks current index and the value within it
     public static void printTestValue(MultiFibonacci object) {
-        System.out.println("Current index value = " + object.getIndex());
-        System.out.println("The current value is " + object.getValue() + "\n");
+        System.out.println("[ID:" + object.getInstanceId() + "] Current index value = " + object.getIndex());
+        System.out.println("[ID:" + object.getInstanceId() + "] The current value is " + object.getValue() + "\n");
 
     }
 
@@ -41,12 +41,17 @@ public class MultiFibonacciTest {
         System.out.println("First item tested");
         MultiFibonacci fibObj1 = MultiFibonacci.getInstance();
         MultiFibonacciTest.TestInMain(fibObj1);
-        
         System.out.println("\n");
 
         System.out.println("Second item tested");
         MultiFibonacci fibObj2 = MultiFibonacci.getInstance();
         MultiFibonacciTest.TestInMain(fibObj2);
+        System.out.println("\n");
+
+        System.out.println("Third item tested");
+        MultiFibonacci fibObj3 = MultiFibonacci.getInstance();
+        MultiFibonacciTest.TestInMain(fibObj3);
+        System.out.println("\n");
     }
 }
 

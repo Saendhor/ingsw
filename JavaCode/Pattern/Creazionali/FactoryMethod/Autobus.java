@@ -1,25 +1,55 @@
 public class Autobus implements IVehicle {
-    private String driverName;
     private float speed;
+    private String color;
+    private String driverName;
+    private String modelName;
+    
+    public Autobus() {}
 
-    public Autobus() {
-        this.speed = 3f;
+    public void printDetails() {
+        System.out.println("Driver: " + getDriver());
+        System.out.println("Model: " + getModel());
+        System.out.println("Color: " + getColor());
     }
 
-    @Override
-    public void addDriver(String name) {
-        this.driverName = name;
+    public float getSpeed() {
+        return speed;
     }
 
-    @Override
-    public void speedUp(int amount) {
+    public String getColor() {
+        return color;
+    }
+
+    public String getDriver() {
+        return driverName;
+    }
+
+    public String getModel() {
+        return modelName;
+    }
+
+    public void setColor(String colorNameInput) {
+        this.color = colorNameInput;
+    }
+
+    public void setDriver(String driverNameInput) {
+        this.driverName = driverNameInput;
+    }
+
+    public void setModel(String modelNameInput) {
+        this.modelName = modelNameInput;
+    }
+
+    public void setStartingSpeed(float startingSpeedInput) {
+        this.speed = startingSpeedInput;
+    }
+
+    public void showSpeed() {
+        System.out.println("Current autobus is running at " + getSpeed() + " m/s");
+    }
+
+    public void speedUp(float amount) {
         this.speed += amount;
     }
 
-    @Override
-    public void printDetails() {
-        System.out.println("Driver name: " + this.driverName);
-        System.out.println("Current car speed: " + this.speed);
-    }
-    
 }

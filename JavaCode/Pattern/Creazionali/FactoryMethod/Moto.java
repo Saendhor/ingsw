@@ -3,13 +3,23 @@ public class Moto implements IVehicle {
     private String color;
     private String driverName;
     private String modelName;
+
+    private final String vehicleName = "Moto";
     
-    public Moto() {}
+    public Moto() {
+        this.speed = 120f;
+        this.color = "Black";
+        this.driverName = "Alessandra";
+        this.modelName = "Mitsubishi";
+    }
 
     public void printDetails() {
+        System.out.println("Selected vehicle: " + vehicleName);
         System.out.println("Driver: " + getDriver());
         System.out.println("Model: " + getModel());
         System.out.println("Color: " + getColor());
+        showSpeed();
+        System.out.println("\n");
     }
 
     public float getSpeed() {
@@ -45,7 +55,7 @@ public class Moto implements IVehicle {
     }
 
     public void showSpeed() {
-        System.out.println("Current moto is running at " + getSpeed() + " m/s");
+        System.out.println("Current "+ vehicleName + " is running at " + getSpeed() + " km/h");
     }
 
     public void speedUp(float amount) {

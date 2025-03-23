@@ -1,0 +1,4 @@
+/* ProductB */
+public interface Pizza {
+    void bake();
+}

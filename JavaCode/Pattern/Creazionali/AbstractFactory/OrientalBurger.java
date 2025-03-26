@@ -1,5 +1,9 @@
 public class OrientalBurger implements Burger {
 
+    public OrientalBurger() {
+        /*Default constructor */
+    }
+
     @Override
     public void prepare() {
         // Logic relevant to Oriental Burgers

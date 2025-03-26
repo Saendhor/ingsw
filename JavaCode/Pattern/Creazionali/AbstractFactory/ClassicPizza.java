@@ -1,4 +1,8 @@
 public class ClassicPizza implements Pizza {
+
+    public ClassicPizza(){
+        /*Default constructor */
+    }
     
     @Override
     public void bake() {

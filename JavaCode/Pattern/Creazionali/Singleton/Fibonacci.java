@@ -1,3 +1,5 @@
+package Singleton;
+
 public class Fibonacci {
     private static Fibonacci instance = new Fibonacci();
     private int index;

@@ -1,3 +1,5 @@
+package Prototype;
+
 public class CompactModule implements Prototype {
     private final int id;
     private final int mode;

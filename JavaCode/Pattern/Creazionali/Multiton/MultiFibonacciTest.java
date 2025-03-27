@@ -1,3 +1,5 @@
+package Multiton;
+
 public class MultiFibonacciTest {
 
     //Checks the total number of item in the values array of the MultiFibonacci object

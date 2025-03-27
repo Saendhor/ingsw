@@ -1,3 +1,5 @@
+package Singleton;
+
 public class FibonacciTest {
 
     //Checks the total number of item in the values array of the Fibonacci object

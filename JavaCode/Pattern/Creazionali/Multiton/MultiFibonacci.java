@@ -1,3 +1,5 @@
+package Multiton;
+
 public class MultiFibonacci {
     private int objId = 0;
     private int index;

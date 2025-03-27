@@ -1,3 +1,5 @@
+package AbstractFactory.products;
+
 public class ClassicPizza implements Pizza {
 
     public ClassicPizza(){

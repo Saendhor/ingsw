@@ -1,3 +1,4 @@
+package FactoryMethod.products;
 /*  ConcreteProductA */
 
 public class ClassicBurger implements Burger {

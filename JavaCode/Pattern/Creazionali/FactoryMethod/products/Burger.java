@@ -1,3 +1,4 @@
+package FactoryMethod.products;
 /*  <<intefrace>>
  *    Product
 */

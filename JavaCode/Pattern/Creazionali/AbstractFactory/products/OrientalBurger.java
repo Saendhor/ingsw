@@ -1,3 +1,5 @@
+package AbstractFactory.products;
+
 public class OrientalBurger implements Burger {
 
     public OrientalBurger() {

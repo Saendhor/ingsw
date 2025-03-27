@@ -1,5 +1,8 @@
-/* Creator */
+package FactoryMethod.factories;
 
+import FactoryMethod.products.Burger;
+
+/* Creator */
 public abstract class Restaurant {
     public void orderBurger() {
         System.out.println("Ordering Burger...");

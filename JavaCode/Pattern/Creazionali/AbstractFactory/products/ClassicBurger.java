@@ -1,3 +1,5 @@
+package AbstractFactory.products;
+
 public class ClassicBurger implements Burger {
 
     public ClassicBurger() {

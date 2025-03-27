@@ -1,3 +1,7 @@
+package AbstractFactory.factories;
+
+import AbstractFactory.products.*;
+
 public class OrientalRestaurant extends Restaurant {
 
     public OrientalRestaurant() {

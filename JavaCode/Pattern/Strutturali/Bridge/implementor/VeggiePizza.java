@@ -1,5 +1,6 @@
 package Bridge.implementor;
 
+/* ConcreteImplementorB */
 public class VeggiePizza extends Pizza {
     @Override
     public void assemble() {

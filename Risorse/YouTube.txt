@@ -1,2 +1,5 @@
 #Playlist for all design patterns
 https://youtube.com/playlist?list=PLlsmxlJgn1HJpa28yHzkBmUY-Ty71ZUGc
+
+#Code metrics
+https://www.youtube.com/watch?v=pELKNy8B5Nw

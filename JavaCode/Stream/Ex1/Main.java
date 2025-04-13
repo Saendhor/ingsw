@@ -1,4 +1,4 @@
-/* Data una lista di Persona stampare e contare i nomi dei programmatori */
+import java.util.*;
 import java.util.stream.*;
 
 class Persona {
@@ -29,13 +29,23 @@ class Persona {
 
 public class Main {
     public static void main(String[] args) {
-        Stream<Persona> programmerList = Stream.of(new Persona("Carlo", "Programmatore"), new Persona("Gianclaudio", "Programmatore"), new Persona("Annalisa", "Programmatore"));
-        
-        long request = programmerList.filter(p -> p.getRole().equals("Programmatore"))
-                                     .peek(p -> System.out.println("Ciao! Sono " + p.getName() + " e sono un* " + p.getRole()))
-                                     .count();
+        /* Data una lista di Persona stampare e contare i nomi dei programmatori */
+        List<Persona> team = new LinkedList<Persona>();
+        team.add(new Persona("Clara", "RisorseUmane"));
+        team.add(new Persona("Adolfo", "Segreterio"));
+        team.add(new Persona("Luca", "Programmatore"));
+        team.add(new Persona("Sandrina", "Programmatore"));
+        team.add(new Persona("Carlo", "Segreterio"));
+        team.add(new Persona("Francesca", "RisorseUmane"));
+        team.add(new Persona("Simone", "Programmatore"));
 
-        System.out.println("The number of roles is " + request);
+        long numProgrammatori = team.stream()
+                                    .filter(p -> p.getRole().equals("Programmatore"))
+                                    .peek(p -> System.out.println("Ciao! Sono " + p.getName() + " e sono un* " + p.getRole()))
+                                    .count();
+
+        System.out.println("\nCi sono " + numProgrammatori + " nel team selezionato");
+
     }
     
 }

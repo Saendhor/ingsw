@@ -1,6 +1,3 @@
-/* Data una lista di Persona creare una lista di Pagamento con costo calcolato in base a ciascuna
-persona e stampare i pagamenti*/
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -63,6 +60,7 @@ public class Main {
         daPagare.add(team.get(1));
         daPagare.add(team.get(2));
 
+        /* Data una lista di Persona creare una lista di Pagamento con costo calcolato in base a ciascuna persona e stampare i pagamenti*/
         System.out.println("Le seguenti persone fanno parte della lista delle persone da pagare:");
         List<Pagamento> pagati = new LinkedList<Pagamento>();
         pagati = team.stream()

@@ -1,6 +1,3 @@
-/* Data una lista di Persona stampare i ruoli presenti e per ciascun ruolo la lista delle persone aventi
-quel ruolo. */
-
 import java.util.*;
 import java.util.stream.*;
 
@@ -33,6 +30,7 @@ public class Main {
         team.add(new Persona("Francesca", "RisorseUmane"));
         team.add(new Persona("Simone", "Programmatore"));
 
+        /* Data una lista di Persona stampare i ruoli presenti e per ciascun ruolo la lista delle persone aventi quel ruolo. */
         team.stream()
             .map(p -> p.getRole())
             .distinct()

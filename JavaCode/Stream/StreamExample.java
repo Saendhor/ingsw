@@ -1,6 +1,8 @@
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/* 13 */
+
 public class StreamExample {
     public static void main(String[] args) {
         /*  .of() ritorna una lista non modificabile contentente gli elementi passati

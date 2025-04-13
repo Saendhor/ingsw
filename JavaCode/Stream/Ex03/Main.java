@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 class Pagamento {
@@ -63,6 +64,12 @@ public class Main {
         /* Data una lista di Persona creare una lista di Pagamento con costo calcolato in base a ciascuna persona e stampare i pagamenti*/
         System.out.println("Le seguenti persone fanno parte della lista delle persone da pagare:");
         List<Pagamento> pagati = new LinkedList<Pagamento>();
+
+        pagati = team.stream()
+                     .filter(p -> daPagare.contains(p))
+                     .map(p -> new Pagamento(p, p.getSalary() * 2f))
+                     .peek(p -> System.out.println("Ciao! Sono " + p.getPerson().getName() + " e ho già pagato " + p.getPrice()))
+                     .collect(Collectors.toList());
         
     }
 }

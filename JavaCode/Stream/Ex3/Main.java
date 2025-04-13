@@ -63,10 +63,6 @@ public class Main {
         /* Data una lista di Persona creare una lista di Pagamento con costo calcolato in base a ciascuna persona e stampare i pagamenti*/
         System.out.println("Le seguenti persone fanno parte della lista delle persone da pagare:");
         List<Pagamento> pagati = new LinkedList<Pagamento>();
-        pagati = team.stream()
-                        .filter(p -> daPagare.contains(p))
-                        .map(p-> new Pagamento(p, p.getSalary() * 10))
-                        .peek(v -> System.out.println(v.getPerson().getName() + " " + v.getPrice() + " "))
-                        .collect(Collectors.toList());
+        
     }
 }

@@ -21,6 +21,7 @@ class Persona {
 
 public class Main {
     public static void main(String[] args) {
+        /* Data una lista di Persona stampare i ruoli presenti e per ciascun ruolo la lista delle persone aventi quel ruolo. */
         List<Persona> team = new LinkedList<Persona>();
         team.add(new Persona("Clara", "RisorseUmane"));
         team.add(new Persona("Adolfo", "Segreterio"));
@@ -30,15 +31,13 @@ public class Main {
         team.add(new Persona("Francesca", "RisorseUmane"));
         team.add(new Persona("Simone", "Programmatore"));
 
-        /* Data una lista di Persona stampare i ruoli presenti e per ciascun ruolo la lista delle persone aventi quel ruolo. */
         team.stream()
             .map(p -> p.getRole())
             .distinct()
-            .peek(r -> System.out.print("\nRuolo " + r + ": "))
-            .forEach(r -> team.stream()
+            .peek(r -> System.out.println("Ruolo corrente: " + r))
+            .forEach(r -> team.stream() //Questo è lo stesso dell'esercizio 1
                               .filter(p -> p.getRole().equals(r))
-                              .forEach(p -> System.out.print(p.getName() + " ")));
-        
-        System.out.println("\n");
+                              .forEach(p -> System.out.println("Ciao! Sono " + p.getName() + " e sono un* " + p.getRole())));
+
     }
 }

@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.*;
 
 class Persona {
     String name, role;
@@ -20,7 +21,7 @@ class Persona {
 
 public class Main {
     public static void main(String[] args) {
-        /* Data una lista di Persona stampare i ruoli presenti e per ciascun ruolo la lista delle persone aventi quel ruolo. */
+        /* Data una lista di istanze di Persona, stampare i ruoli presenti e per ciascun ruolo la lista delle persone aventi quel ruolo */
         List<Persona> team = new LinkedList<Persona>();
         team.add(new Persona("Clara", "RisorseUmane"));
         team.add(new Persona("Adolfo", "Segreterio"));
@@ -31,12 +32,16 @@ public class Main {
         team.add(new Persona("Simone", "Programmatore"));
 
         team.stream()
-            .map(p -> p.getRole())
-            .distinct()
-            .peek(r -> System.out.println("Ruolo corrente: " + r))
-            .forEach(r -> team.stream() //Questo è lo stesso dell'esercizio 1
-                              .filter(p -> p.getRole().equals(r))
-                              .forEach(p -> System.out.println("Ciao! Sono " + p.getName() + " e sono un* " + p.getRole())));
+            .collect(Collectors.groupingBy(Persona::getRole))
+            .forEach((role, personeRole) -> {
+                System.out.println("Role: " + role);
+                personeRole.forEach(persona -> System.out.println(" " + persona.getName()));
+            });
+            
+
+
+
 
     }
+    
 }
